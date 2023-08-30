@@ -8,6 +8,13 @@ android {
     namespace = "com.kiko.kige"
     compileSdk = 34
 
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
+    
     defaultConfig {
         minSdk = 24
 
