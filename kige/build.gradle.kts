@@ -1,20 +1,19 @@
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
-    alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.kotlinAndroid)
+    id("com.android.library")
+    id("kotlin-android")
+    id("maven-publish")
 }
 
 android {
     namespace = "com.kiko.kige"
     compileSdk = 34
-
     publishing {
         singleVariant("release") {
             withSourcesJar()
-            withJavadocJar()
         }
     }
-    
+
     defaultConfig {
         minSdk = 24
 
@@ -66,3 +65,16 @@ dependencies {
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
 }
+
+
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            groupId = "com.github.badkiko"
+            artifactId = "kige"
+            version = "0.0.1"
+        }
+    }
+}
+
