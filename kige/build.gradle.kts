@@ -71,10 +71,12 @@ dependencies {
 publishing {
     publications {
         create<MavenPublication>("maven") {
-            groupId = "com.github.badkiko"
+            groupId = "com.kiko.kige"
             artifactId = "kige"
             version = "0.0.1"
+            afterEvaluate {
+                artifact(tasks.getByName("bundleReleaseAar"))
+            }
         }
     }
 }
-
