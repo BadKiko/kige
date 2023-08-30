@@ -16,4 +16,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "kige"
 include(":kige")
- 
+include(":samplekige")
