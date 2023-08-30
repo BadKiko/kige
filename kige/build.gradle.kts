@@ -75,8 +75,10 @@ publishing {
             artifactId = "kige"
             version = "0.0.1"
             afterEvaluate {
-                artifact(tasks.getByName("bundleReleaseAar"))
+                from(components["release"])
             }
         }
     }
 }
+
+
