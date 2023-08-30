@@ -1,6 +1,7 @@
-# Kige
+![KigeBanner](https://raw.githubusercontent.com/BadKiko/kige/master/images/kigelogo.png)
+
 ## What is Kige?
-Kiger - is an image-picker for android written for Jetpack Compose. Its give you ability to choose image from your gallery. It uses Modal Bottom Sheet State which added in Jetpack Compose Material 3 1.2.0-alpha02
+Kige - is an image-picker for android written for Jetpack Compose. Its give you ability to choose image from your gallery. It uses Modal Bottom Sheet State which added in Jetpack Compose Material 3 1.2.0-alpha02
 
 Project in develop!
 
