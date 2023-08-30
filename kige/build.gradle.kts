@@ -47,7 +47,8 @@ android {
 
 dependencies {
     implementation(libs.coil.compose)
-
+    implementation(libs.skydoves.landscapist.coil)
+    implementation(libs.skydoves.landscapist.placeholder)
     implementation(libs.accompanist.permissions)
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)

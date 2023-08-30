@@ -3,6 +3,8 @@ package com.kiko.kige.ui.components
 import android.os.Build
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -25,7 +27,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalPermissionsApi::class)
 @Composable
-fun PermissionSheet(
+internal fun PermissionSheet(
     rememberKigePermissionState: PermissionState,
     onGivenPermission: @Composable () -> Unit
 ) {
@@ -55,10 +57,11 @@ fun PermissionSheet(
                 Text(
                     rememberKigePermissionState.permissionUIState.title,
                     fontWeight = rememberKigePermissionState.permissionUIState.fontWeight,
-                    fontSize = rememberKigePermissionState.permissionUIState.fontSize
+                    fontSize = rememberKigePermissionState.permissionUIState.fontSize,
+                    textAlign = rememberKigePermissionState.permissionUIState.textAlign
                 )
                 Text(rememberKigePermissionState.permissionUIState.contentText)
-                Button(onClick = {
+                Button(modifier = Modifier.fillMaxWidth(), onClick = {
                     coroutineScope.launch { readExternalPermission.launchPermissionRequest() }
                         .invokeOnCompletion {
                             if (readExternalPermission.status.isGranted) isGranted.value = true
@@ -66,6 +69,7 @@ fun PermissionSheet(
                 }) {
                     Text(rememberKigePermissionState.permissionUIState.buttonText)
                 }
+                Spacer(Modifier.padding(16.dp))
             }
         }
     }

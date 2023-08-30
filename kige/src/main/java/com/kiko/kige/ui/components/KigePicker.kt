@@ -10,7 +10,9 @@ import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import com.kiko.kige.data.remembers.rememberKigeGalleryState
 import com.kiko.kige.data.remembers.rememberKigePermissionState
+import com.kiko.kige.data.remembers.rememberKigeState
 import com.kiko.kige.data.state.GalleryState
+import com.kiko.kige.data.state.KigeState
 import com.kiko.kige.data.state.PermissionState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -18,27 +20,35 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun KigePicker(
-    rememberKigeGalleryState: GalleryState = rememberKigeGalleryState(),
-    rememberKigePermissionState: PermissionState = rememberKigePermissionState(),
-    onPick: (String) -> Unit
+    rememberKigeState: KigeState = rememberKigeState()
 ) {
-    val readExternalPermission = if (Build.VERSION.SDK_INT < 33)
-        rememberPermissionState(Manifest.permission.READ_EXTERNAL_STORAGE)
-    else
-        rememberPermissionState(Manifest.permission.READ_MEDIA_IMAGES)
+    if (rememberKigeState.visibleState.value) {
+        val readExternalPermission = if (Build.VERSION.SDK_INT < 33)
+            rememberPermissionState(Manifest.permission.READ_EXTERNAL_STORAGE)
+        else
+            rememberPermissionState(Manifest.permission.READ_MEDIA_IMAGES)
 
-    val coroutineScope = rememberCoroutineScope()
+        val coroutineScope = rememberCoroutineScope()
 
-    if (readExternalPermission.status.isGranted) {
-        CreateGallerySheet(onPick, coroutineScope, rememberKigeGalleryState)
-    } else {
-        PermissionSheet(rememberKigePermissionState) {
-            CreateGallerySheet(onPick, coroutineScope, rememberKigeGalleryState)
-        }
+        if (readExternalPermission.status.isGranted) {
+            CreateGallerySheet(
+                coroutineScope,
+                rememberKigeState.rememberGalleryState,
+                rememberKigeState
+            )
+        } else {
+            PermissionSheet(rememberKigeState.rememberPermissionState) {
+                CreateGallerySheet(
+                    coroutineScope,
+                    rememberKigeState.rememberGalleryState,
+                    rememberKigeState
+                )
+            }
 
-        LaunchedEffect(true) {
-            coroutineScope.launch {
-                rememberKigePermissionState.expand()
+            LaunchedEffect(true) {
+                coroutineScope.launch {
+                    rememberKigeState.rememberPermissionState.expand()
+                }
             }
         }
     }
@@ -46,11 +56,11 @@ fun KigePicker(
 
 @Composable
 private fun CreateGallerySheet(
-    onPick: (String) -> Unit,
     coroutineScope: CoroutineScope,
-    rememberKigeGalleryState: GalleryState
+    rememberKigeGalleryState: GalleryState,
+    rememberKigeState: KigeState
 ) {
-    GallerySheet(rememberKigeGalleryState, onPick)
+    GallerySheet(rememberKigeGalleryState, rememberKigeState)
 
     LaunchedEffect(true) {
         coroutineScope.launch {

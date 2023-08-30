@@ -2,11 +2,13 @@
 accompanist-permissions = "0.33.1-alpha"
 agp = "8.3.0-alpha01"
 coil-compose = "2.4.0"
+github-landscapist-coil = "2.2.8"
 kotlin = "1.8.10"
 core-ktx = "1.10.1"
 junit = "4.13.2"
 androidx-test-ext-junit = "1.1.5"
 espresso-core = "3.5.1"
+landscapist-placeholder = "2.2.8"
 lifecycle-runtime-ktx = "2.6.1"
 activity-compose = "1.7.2"
 material3 = "1.2.0-alpha06"
@@ -23,6 +25,8 @@ espresso-core = { group = "androidx.test.espresso", name = "espresso-core", vers
 lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-ktx" }
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
+skydoves-landscapist-coil = { module = "com.github.skydoves:landscapist-coil", version.ref = "github-landscapist-coil" }
+skydoves-landscapist-placeholder = { module = "com.github.skydoves:landscapist-placeholder", version.ref = "landscapist-placeholder" }
 ui = { group = "androidx.compose.ui", name = "ui", version.ref = "ui"  }
 ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }

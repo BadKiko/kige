@@ -12,6 +12,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,20 +22,29 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
-import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.kiko.kige.data.remembers.rememberKigeState
 import com.kiko.kige.data.state.GalleryState
+import com.kiko.kige.data.state.KigeState
 import com.kiko.kige.data.utils.GalleryUtils
+import com.skydoves.landscapist.ImageOptions
+import com.skydoves.landscapist.coil.CoilImage
+import com.skydoves.landscapist.components.rememberImageComponent
+import com.skydoves.landscapist.placeholder.shimmer.ShimmerPlugin
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalPermissionsApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun GallerySheet(rememberGalleryState: GalleryState, onPick: (String) -> Unit) {
+internal fun GallerySheet(
+    rememberGalleryState: GalleryState,
+    rememberKigeState: KigeState,
+) {
     val coroutineScope = rememberCoroutineScope()
 
     if (rememberGalleryState.visibleState.value) {
         ModalBottomSheet(
             sheetState = rememberGalleryState.sheetState,
-            onDismissRequest = { rememberGalleryState.hide(coroutineScope) }) {
+            onDismissRequest = {
+                rememberKigeState.hide(coroutineScope)
+            }) {
             Column(
                 modifier = Modifier.padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -53,15 +63,25 @@ fun GallerySheet(rememberGalleryState: GalleryState, onPick: (String) -> Unit) {
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     items(photos) { photoUri ->
-                        AsyncImage(
+                        CoilImage(
                             modifier = rememberGalleryState.galleryUIState.imagesModifier
                                 .clickable {
-                                    onPick(photoUri)
-                                    rememberGalleryState.hide(coroutineScope)
+                                    rememberKigeState.hide(coroutineScope) {
+                                        rememberKigeState.choosePhoto(photoUri)
+                                    }
                                 },
-                            model = photoUri,
-                            contentDescription = null,
-                            contentScale = ContentScale.Crop
+                            component = rememberImageComponent {
+                                // shows a shimmering effect when loading an image.
+                                +ShimmerPlugin(
+                                    baseColor = MaterialTheme.colorScheme.secondaryContainer,
+                                    highlightColor = MaterialTheme.colorScheme.secondary
+                                )
+                            },
+                            imageModel = { photoUri }, // loading a network image or local resource using an URL.
+                            imageOptions = ImageOptions(
+                                contentScale = ContentScale.Crop,
+                                alignment = Alignment.Center
+                            )
                         )
                     }
                 }

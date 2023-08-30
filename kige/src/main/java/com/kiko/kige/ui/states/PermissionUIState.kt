@@ -9,14 +9,17 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.w3c.dom.Text
 
 data class PermissionUIState(
-    val title: String = "Запрос разрешения на чтение",
+    val title: String = "Need permission",
     val fontSize: TextUnit = 18.sp,
     val fontWeight: FontWeight = FontWeight.SemiBold,
-    val contentText : String = "Необходимо разрешение на чтение вашей галлереи",
-    val buttonText: String = "Предоставить"
+    val textAlign: TextAlign = TextAlign.Center,
+    val contentText : String = "App need request permission for gallery use",
+    val buttonText: String = "Give"
 )
