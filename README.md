@@ -56,6 +56,13 @@ implementation("com.github.BadKiko:kige:version")
 
 ## Usage
 
+Add to manifest
+
+```
+<uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+```
+
 For get image-picker you can execute in @Composable function:
 
 ```
