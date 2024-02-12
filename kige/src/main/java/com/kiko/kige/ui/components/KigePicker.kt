@@ -40,7 +40,10 @@ fun KigePicker(
                 onSelect
             )
         } else {
-            PermissionSheet(rememberKigeState.rememberPermissionState) {
+            PermissionSheet(
+                { rememberKigeState.hide(coroutineScope) },
+                rememberKigeState.rememberPermissionState
+            ) {
                 CreateGallerySheet(
                     coroutineScope,
                     rememberKigeState.rememberGalleryState,

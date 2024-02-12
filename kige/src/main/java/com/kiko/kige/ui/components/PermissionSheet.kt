@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
+import com.kiko.kige.data.state.KigeState
 import com.kiko.kige.data.state.PermissionState
 import com.kiko.kige.data.utils.GalleryUtils
 import kotlinx.coroutines.launch
@@ -28,6 +29,7 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalPermissionsApi::class)
 @Composable
 internal fun PermissionSheet(
+    onHide: () -> Unit,
     rememberKigePermissionState: PermissionState,
     onGivenPermission: @Composable () -> Unit
 ) {
@@ -47,7 +49,10 @@ internal fun PermissionSheet(
     if (rememberKigePermissionState.visibleState.value) {
         ModalBottomSheet(
             sheetState = rememberKigePermissionState.sheetState,
-            onDismissRequest = { rememberKigePermissionState.hide(coroutineScope) }) {
+            onDismissRequest = {
+                onHide()
+                rememberKigePermissionState.hide(coroutineScope)
+            }) {
             Column(
                 modifier = Modifier.padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
