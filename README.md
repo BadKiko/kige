@@ -54,7 +54,8 @@ implementation("com.github.BadKiko:kige:version")
 For get imagee-picker you can execute in @Composable function:
 
 ```
-KigePicker { image ->
-  ...
-}
+val rememberKigeState = rememberKigeState()
+KigePicker(rememberKigeState)
+
+AsyncImage(model = rememberKigeState.photoUri.value, contentDescription = null)
 ```
