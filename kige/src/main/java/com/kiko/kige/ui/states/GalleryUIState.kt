@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 data class GalleryUIState(
-    val title: String = "Выберите фото",
+    val title: String = "Choose image",
     val fontSize: TextUnit = 18.sp,
     val fontWeight: FontWeight = FontWeight.SemiBold,
     val imagesModifier: Modifier = Modifier
