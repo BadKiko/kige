@@ -5,6 +5,7 @@ import android.os.Build
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.graphics.painter.Painter
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
@@ -20,7 +21,8 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun KigePicker(
-    rememberKigeState: KigeState = rememberKigeState()
+    rememberKigeState: KigeState = rememberKigeState(),
+    onSelect: (painter: Painter) -> Unit
 ) {
     if (rememberKigeState.visibleState.value) {
         val readExternalPermission = if (Build.VERSION.SDK_INT < 33)
@@ -34,14 +36,16 @@ fun KigePicker(
             CreateGallerySheet(
                 coroutineScope,
                 rememberKigeState.rememberGalleryState,
-                rememberKigeState
+                rememberKigeState,
+                onSelect
             )
         } else {
             PermissionSheet(rememberKigeState.rememberPermissionState) {
                 CreateGallerySheet(
                     coroutineScope,
                     rememberKigeState.rememberGalleryState,
-                    rememberKigeState
+                    rememberKigeState,
+                    onSelect
                 )
             }
 
@@ -58,9 +62,10 @@ fun KigePicker(
 private fun CreateGallerySheet(
     coroutineScope: CoroutineScope,
     rememberKigeGalleryState: GalleryState,
-    rememberKigeState: KigeState
+    rememberKigeState: KigeState,
+    onSelect: (painter: Painter) -> Unit
 ) {
-    GallerySheet(rememberKigeGalleryState, rememberKigeState)
+    GallerySheet(rememberKigeGalleryState, rememberKigeState, onSelect)
 
     LaunchedEffect(true) {
         coroutineScope.launch {

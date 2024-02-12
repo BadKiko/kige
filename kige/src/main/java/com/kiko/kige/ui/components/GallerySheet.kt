@@ -4,6 +4,7 @@
 
 package com.kiko.kige.ui.components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,12 +17,18 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import coil.compose.rememberAsyncImagePainter
 import com.kiko.kige.data.remembers.rememberKigeState
 import com.kiko.kige.data.state.GalleryState
 import com.kiko.kige.data.state.KigeState
@@ -36,7 +43,11 @@ import com.skydoves.landscapist.placeholder.shimmer.ShimmerPlugin
 internal fun GallerySheet(
     rememberGalleryState: GalleryState,
     rememberKigeState: KigeState,
+    onSelect: (painter: Painter) -> Unit
 ) {
+    var selectedPhotoUri by remember { mutableStateOf("") }
+    val selectedPainter = rememberAsyncImagePainter(model = selectedPhotoUri)
+
     val coroutineScope = rememberCoroutineScope()
 
     if (rememberGalleryState.visibleState.value) {
@@ -63,11 +74,13 @@ internal fun GallerySheet(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     items(photos) { photoUri ->
+
                         CoilImage(
                             modifier = rememberGalleryState.galleryUIState.imagesModifier
                                 .clickable {
                                     rememberKigeState.hide(coroutineScope) {
-                                        rememberKigeState.choosePhoto(photoUri)
+                                        selectedPhotoUri = photoUri
+                                        onSelect(selectedPainter)
                                     }
                                 },
                             component = rememberImageComponent {

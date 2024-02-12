@@ -37,8 +37,4 @@ data class KigeState(
     fun hide(coroutineScope: CoroutineScope, onHided: () -> Unit) {
         rememberGalleryState.hide(coroutineScope, onHided)
     }
-
-    fun choosePhoto(newImageUri: String) {
-        _photoUri.value = newImageUri
-    }
 }
