@@ -17,9 +17,7 @@ import kotlinx.coroutines.launch
 data class KigeState(
     val visibleState: MutableState<Boolean>,
     val rememberGalleryState: GalleryState,
-    val rememberPermissionState: PermissionState,
-    private val _photoUri: MutableState<String> = mutableStateOf(""),
-    val photoUri: State<String> = _photoUri,
+    val rememberPermissionState: PermissionState
 ) {
     fun expand() {
         this.visibleState.value = true

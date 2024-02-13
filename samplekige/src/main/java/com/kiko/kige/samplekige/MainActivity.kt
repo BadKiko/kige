@@ -33,8 +33,8 @@ class MainActivity : ComponentActivity() {
 
                 val rememberKigeState = rememberKigeState()
 
-                KigePicker(rememberKigeState) {
-                    image = it
+                KigePicker(rememberKigeState) { painter, _ ->
+                    image = painter
                 }
 
                 image?.let {

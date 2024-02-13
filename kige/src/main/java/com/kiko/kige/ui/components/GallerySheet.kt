@@ -4,6 +4,8 @@
 
 package com.kiko.kige.ui.components
 
+import android.graphics.Bitmap
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -43,7 +45,7 @@ import com.skydoves.landscapist.placeholder.shimmer.ShimmerPlugin
 internal fun GallerySheet(
     rememberGalleryState: GalleryState,
     rememberKigeState: KigeState,
-    onSelect: (painter: Painter) -> Unit
+    onSelect: (painter: Painter, uri: Uri) -> Unit
 ) {
     var selectedPhotoUri by remember { mutableStateOf("") }
     val selectedPainter = rememberAsyncImagePainter(model = selectedPhotoUri)
@@ -80,7 +82,7 @@ internal fun GallerySheet(
                                 .clickable {
                                     rememberKigeState.hide(coroutineScope) {
                                         selectedPhotoUri = photoUri
-                                        onSelect(selectedPainter)
+                                        onSelect(selectedPainter, Uri.parse(photoUri))
                                     }
                                 },
                             component = rememberImageComponent {
