@@ -49,12 +49,12 @@ internal fun GallerySheet(
     rememberKigeState: KigeState,
     onSelect: (painter: Painter, uri: Uri) -> Unit
 ) {
-    var selectedPhotoUri by remember { mutableStateOf("") }
-    val selectedPainter = rememberAsyncImagePainter(model = selectedPhotoUri)
-
-    val context = LocalContext.current
-
     val coroutineScope = rememberCoroutineScope()
+
+    var selectedPhotoUri by remember { mutableStateOf("") }
+    val selectedPainter = rememberAsyncImagePainter(
+        model = selectedPhotoUri,
+        onSuccess = { rememberKigeState.hide(coroutineScope) })
 
     if (rememberGalleryState.visibleState.value) {
         ModalBottomSheet(
@@ -84,10 +84,8 @@ internal fun GallerySheet(
                         CoilImage(
                             modifier = rememberGalleryState.galleryUIState.imagesModifier
                                 .clickable {
-                                    rememberKigeState.hide(coroutineScope) {
-                                        selectedPhotoUri = photoUri
-                                        onSelect(selectedPainter, Uri.fromFile(File(photoUri)))
-                                    }
+                                    selectedPhotoUri = photoUri
+                                    onSelect(selectedPainter, Uri.fromFile(File(photoUri)))
                                 },
                             component = rememberImageComponent {
                                 // shows a shimmering effect when loading an image.

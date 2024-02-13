@@ -31,8 +31,4 @@ data class KigeState(
             this.visibleState.value = false
         }
     }
-
-    fun hide(coroutineScope: CoroutineScope, onHided: () -> Unit) {
-        rememberGalleryState.hide(coroutineScope, onHided)
-    }
 }
