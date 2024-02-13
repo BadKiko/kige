@@ -6,6 +6,7 @@ package com.kiko.kige.ui.components
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -31,7 +32,9 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import coil.ImageLoader
 import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 import com.kiko.kige.data.remembers.rememberKigeState
 import com.kiko.kige.data.state.GalleryState
 import com.kiko.kige.data.state.KigeState
@@ -40,6 +43,9 @@ import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.coil.CoilImage
 import com.skydoves.landscapist.components.rememberImageComponent
 import com.skydoves.landscapist.placeholder.shimmer.ShimmerPlugin
+import com.skydoves.landscapist.rememberDrawablePainter
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.io.File
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -52,9 +58,11 @@ internal fun GallerySheet(
     val coroutineScope = rememberCoroutineScope()
 
     var selectedPhotoUri by remember { mutableStateOf("") }
+
+
     val selectedPainter = rememberAsyncImagePainter(
-        model = selectedPhotoUri,
-        onSuccess = { rememberKigeState.hide(coroutineScope) })
+        model = selectedPhotoUri
+    )
 
     if (rememberGalleryState.visibleState.value) {
         ModalBottomSheet(
@@ -84,8 +92,19 @@ internal fun GallerySheet(
                         CoilImage(
                             modifier = rememberGalleryState.galleryUIState.imagesModifier
                                 .clickable {
-                                    selectedPhotoUri = photoUri
-                                    onSelect(selectedPainter, Uri.fromFile(File(photoUri)))
+                                    coroutineScope.launch {
+                                        selectedPhotoUri = photoUri
+                                        val uri = Uri.fromFile(File(photoUri))
+
+                                        onSelect(
+                                            selectedPainter,
+                                            uri
+                                        )
+
+                                        delay(500) // Костыль надо придумать как возвращать hide при получении изображения
+
+                                        rememberKigeState.hide(coroutineScope)
+                                    }
                                 },
                             component = rememberImageComponent {
                                 // shows a shimmering effect when loading an image.
