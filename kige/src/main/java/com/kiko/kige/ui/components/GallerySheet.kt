@@ -5,6 +5,7 @@
 package com.kiko.kige.ui.components
 
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -39,6 +40,7 @@ import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.coil.CoilImage
 import com.skydoves.landscapist.components.rememberImageComponent
 import com.skydoves.landscapist.placeholder.shimmer.ShimmerPlugin
+import java.io.File
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -49,6 +51,8 @@ internal fun GallerySheet(
 ) {
     var selectedPhotoUri by remember { mutableStateOf("") }
     val selectedPainter = rememberAsyncImagePainter(model = selectedPhotoUri)
+
+    val context = LocalContext.current
 
     val coroutineScope = rememberCoroutineScope()
 
@@ -82,7 +86,7 @@ internal fun GallerySheet(
                                 .clickable {
                                     rememberKigeState.hide(coroutineScope) {
                                         selectedPhotoUri = photoUri
-                                        onSelect(selectedPainter, Uri.parse(photoUri))
+                                        onSelect(selectedPainter, Uri.fromFile(File(photoUri)))
                                     }
                                 },
                             component = rememberImageComponent {
