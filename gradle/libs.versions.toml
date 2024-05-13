@@ -2,8 +2,7 @@
 accompanist-permissions = "0.33.1-alpha"
 agp = "8.2.2"
 coil-compose = "2.5.0"
-github-landscapist-coil = "2.2.8"
-landscapist-placeholder = "2.2.8"
+landscapist = "2.3.3"
 kotlin = "1.9.22"
 core-ktx = "1.12.0"
 junit = "4.13.2"
@@ -11,9 +10,9 @@ androidx-test-ext-junit = "1.1.5"
 espresso-core = "3.5.1"
 lifecycle-runtime-ktx = "2.7.0"
 activity-compose = "1.8.2"
-material3 = "1.2.0"
-compose-bom = "2024.02.00"
-ui="1.6.1"
+material3 = "1.2.1"
+compose-bom = "2024.05.00"
+ui="1.6.7"
 
 [libraries]
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist-permissions" }
@@ -25,8 +24,8 @@ espresso-core = { group = "androidx.test.espresso", name = "espresso-core", vers
 lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-ktx" }
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
-skydoves-landscapist-coil = { module = "com.github.skydoves:landscapist-coil", version.ref = "github-landscapist-coil" }
-skydoves-landscapist-placeholder = { module = "com.github.skydoves:landscapist-placeholder", version.ref = "landscapist-placeholder" }
+skydoves-landscapist-coil = { module = "com.github.skydoves:landscapist-coil", version.ref = "landscapist" }
+skydoves-landscapist-placeholder = { module = "com.github.skydoves:landscapist-placeholder", version.ref = "landscapist" }
 ui = { group = "androidx.compose.ui", name = "ui", version.ref = "ui"  }
 ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }

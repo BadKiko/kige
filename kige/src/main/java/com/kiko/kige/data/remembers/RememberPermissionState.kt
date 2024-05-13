@@ -13,7 +13,9 @@ import com.kiko.kige.ui.states.PermissionUIState
 fun rememberKigePermissionState(): PermissionState {
     val sheetState = rememberModalBottomSheetState()
     val visibleState = remember { mutableStateOf(false) }
+    val permissionUIState = PermissionUIState.standardPermissionUiState()
+
     return remember {
-        PermissionState(sheetState, visibleState, PermissionUIState())
+        PermissionState(sheetState, visibleState, permissionUIState)
     }
 }

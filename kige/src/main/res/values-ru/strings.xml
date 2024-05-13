@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="gallery_choose_image">Выберите изображение</string>
+    <string name="gallery_content">Приложению необходимо разрешение на чтение галлереи</string>
+    <string name="gallery_title">Необходимо разрешение</string>
+    <string name="gallery_button">Выдать</string>
+</resources>

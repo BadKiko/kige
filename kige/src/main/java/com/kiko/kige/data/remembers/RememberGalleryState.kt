@@ -14,7 +14,9 @@ import com.kiko.kige.ui.states.GalleryUIState
 fun rememberKigeGalleryState(): GalleryState {
     val sheetState = rememberModalBottomSheetState()
     val visibleState = remember { mutableStateOf(false) }
+    val galleryUIState = GalleryUIState.standardGalleryUiState()
+
     return remember {
-        GalleryState(sheetState, GalleryUIState(), visibleState)
+        GalleryState(sheetState, galleryUIState, visibleState)
     }
 }

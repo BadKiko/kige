@@ -28,6 +28,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -42,6 +43,7 @@ import com.kiko.kige.data.utils.GalleryUtils
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.coil.CoilImage
 import com.skydoves.landscapist.components.rememberImageComponent
+import com.skydoves.landscapist.placeholder.shimmer.Shimmer
 import com.skydoves.landscapist.placeholder.shimmer.ShimmerPlugin
 import com.skydoves.landscapist.rememberDrawablePainter
 import kotlinx.coroutines.delay
@@ -101,16 +103,17 @@ internal fun GallerySheet(
                                             uri
                                         )
 
-                                        delay(500) // Костыль надо придумать как возвращать hide при получении изображения
-
+                                        rememberGalleryState.hide(coroutineScope)
+                                        delay(200) // Костыль надо придумать как возвращать hide при получении изображения
                                         rememberKigeState.hide(coroutineScope)
                                     }
                                 },
                             component = rememberImageComponent {
-                                // shows a shimmering effect when loading an image.
                                 +ShimmerPlugin(
-                                    baseColor = MaterialTheme.colorScheme.secondaryContainer,
-                                    highlightColor = MaterialTheme.colorScheme.secondary
+                                    Shimmer.Resonate(
+                                        baseColor = MaterialTheme.colorScheme.secondaryContainer,
+                                        highlightColor = MaterialTheme.colorScheme.secondary
+                                    ),
                                 )
                             },
                             imageModel = { photoUri }, // loading a network image or local resource using an URL.

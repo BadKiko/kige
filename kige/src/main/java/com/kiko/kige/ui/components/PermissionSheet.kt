@@ -60,12 +60,17 @@ internal fun PermissionSheet(
             ) {
                 GalleryUtils.fetchGalleryImages(LocalContext.current)
                 Text(
-                    rememberKigePermissionState.permissionUIState.title,
+                    text = rememberKigePermissionState.permissionUIState.title,
                     fontWeight = rememberKigePermissionState.permissionUIState.fontWeight,
                     fontSize = rememberKigePermissionState.permissionUIState.fontSize,
                     textAlign = rememberKigePermissionState.permissionUIState.textAlign
                 )
-                Text(rememberKigePermissionState.permissionUIState.contentText)
+
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = rememberKigePermissionState.permissionUIState.textAlign,
+                    text = rememberKigePermissionState.permissionUIState.contentText
+                )
                 Button(modifier = Modifier.fillMaxWidth(), onClick = {
                     coroutineScope.launch { readExternalPermission.launchPermissionRequest() }
                         .invokeOnCompletion {

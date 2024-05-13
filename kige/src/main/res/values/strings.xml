@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="gallery_choose_image">Choose image</string>
+    <string name="gallery_content">App need request permission for gallery use</string>
+    <string name="gallery_title">Need permission</string>
+    <string name="gallery_button">Give</string>
+</resources>
